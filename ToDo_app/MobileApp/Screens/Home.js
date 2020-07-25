@@ -28,8 +28,9 @@ alert('Please Enter Some Value')
     }else{
       array.push({title : this.state.textInput_Holder , isSelected : false});
  
-      this.setState({ arrayHolder: [...array] ,
-        textInput_Holder : ''
+      this.setState({
+      arrayHolder: [...array] ,
+      textInput_Holder : ''
       })
     }}
  
