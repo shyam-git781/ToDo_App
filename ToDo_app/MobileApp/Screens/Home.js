@@ -2,7 +2,6 @@ import React, { Component } from 'react';
  
 import {FlatList, Text, View,Alert, TouchableOpacity, TextInput } from 'react-native';
 import HomeScreenStyles from '../Styles/HomeScreenStyles';
-let array = []
 export default class HomeScreen extends Component {
  
   constructor(props) {
@@ -17,7 +16,7 @@ export default class HomeScreen extends Component {
   }
  
   componentDidMount() {
-    this.setState({ arrayHolder: [...array] })
+    //
   }
  
  
@@ -26,10 +25,8 @@ export default class HomeScreen extends Component {
     if(this.state.textInput_Holder == ''){
 alert('Please Enter Some Value')
     }else{
-      array.push({title : this.state.textInput_Holder , isSelected : false});
- 
       this.setState({
-      arrayHolder: [...array] ,
+      arrayHolder : [...this.state.arrayHolder, {title : this.state.textInput_Holder , isSelected : false}],
       textInput_Holder : ''
       })
     }}
@@ -68,7 +65,7 @@ alert('Please Enter Some Value')
 
 
 <TouchableOpacity style={{position : 'absolute', right: 15 , borderWidth:item.isSelected ? 1: null,borderColor: '#4CAF50', paddingHorizontal: 15,paddingVertical:5,backgroundColor: item.isSelected ? '#4CAF50' : 'transparent', borderRadius: 3}}>
-  {item.isSelected ? <Text style={HomeScreenStyles.listItemText} onPress={this.deleteAttachment.bind(this, item.title)}>Delete</Text> : null}
+  {item.isSelected ? <Text style={HomeScreenStyles.listItemText} onPress={this.deleteAttachment.bind(this, item.title, index)}>Delete</Text> : null}
 </TouchableOpacity>
     </View>
     )
@@ -79,13 +76,10 @@ alert('Please Enter Some Value')
       </View>
     )
   }
-   deleteAttachment(name) {
+   deleteAttachment(name, index) {
     const { arrayHolder } = this.state
-    let deletedData = arrayHolder.filter(item => {
-      return item.title != name
-    })
-    this.setState({ arrayHolder: deletedData })
-    array = deletedData
+    arrayHolder.splice(index, 1);
+    this.setState({ arrayHolder: arrayHolder })
   }
  
  
@@ -130,4 +124,3 @@ alert('Please Enter Some Value')
     );
   }
 }
- 
